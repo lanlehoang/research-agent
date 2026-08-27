@@ -5,6 +5,7 @@ from langgraph.types import Command, Send, Interrupt
 from pydantic import BaseModel, Field
 from typing import List, Optional, Annotated
 from research_agent.config import settings
+import research_agent.agents.tools as tools
 
 
 class AgentState(StateGraph):
