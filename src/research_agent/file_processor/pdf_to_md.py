@@ -4,7 +4,7 @@ import os
 import time
 from pathlib import Path
 from typing import Any
-from research_agent.config import settings
+from research_agent.utils.config import settings
 
 MARKER_CONFIG = {
     "output_format": "markdown",
