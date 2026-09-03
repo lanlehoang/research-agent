@@ -9,24 +9,38 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    # AI — LLM
+    # AI -- LLM
     OPENAI_API_KEY: str = ""
-    OPENAI_BASE_URL: str = ""   # empty = default OpenAI
+    OPENAI_BASE_URL: str = ""  # empty = default OpenAI
     OPENAI_MODEL_NAME: str = ""
 
-    # AI — Embedding (can use a separate endpoint/key)
-    EMBEDDING_API_KEY: str = ""          # if empty, falls back to OPENAI_API_KEY
-    EMBEDDING_BASE_URL: str = ""         # if empty, falls back to OPENAI_BASE_URL
+    # AI -- Embedding (can use a separate endpoint/key)
+    EMBEDDING_API_KEY: str = ""  # if empty, falls back to OPENAI_API_KEY
+    EMBEDDING_BASE_URL: str = ""  # if empty, falls back to OPENAI_BASE_URL
     EMBEDDING_MODEL_NAME: str = "v_search"
-    EMBEDDING_DIM: int = 1024   # 0 = use model's native dim (no dimensions param)
+    EMBEDDING_DIM: int = 1024  # 0 = use model's native dim (no dimensions param)
 
     # File upload
     MAX_FILE_SIZE_MB: int = 7
 
-    # ── computed props ────────────────────────────────────────────────────────
+    # Database
+    DB_HOST: str = "localhost"
+    DB_PORT: int = 5432
+    DB_USER: str = ""
+    DB_PASSWORD: str = ""
+    DB_NAME: str = "research_agent"
+
+    # -- computed props --------------------------------------------------------
     @property
     def max_file_size_bytes(self) -> int:
         return self.MAX_FILE_SIZE_MB * 1024 * 1024
+
+    @property
+    def postgres_url(self) -> str:
+        return (
+            f"postgresql+asyncpg://{self.DB_USER}:{self.DB_PASSWORD}"
+            f"@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+        )
 
 
 settings = Settings()
